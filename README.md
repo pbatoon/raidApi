@@ -1,5 +1,20 @@
 # FFXIV Raid API
 
+## Data Structure
+```
+{
+    "name": "raid name",
+    "raidTier": "raid tier (such as Asphodelos)",
+    "questline": "raid questline (such as Pandaemonium)",
+    "shortName": "short name (detailed below)",
+    "minCharLvl": min character level (number),
+    "minILvl": min ilvl (number),
+    "numTanks": number of tanks (number),
+    "numHealers": number of healers (number),
+    "numDps": number of DPS (number)
+}
+```
+
 ## Retrieve Raid by ID
 To retrieve raid data by ID, run a GET request using `http://localhost:3000/raids/id/<_id>`. We will also use this URL to update and delete data.
 
