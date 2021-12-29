@@ -9,6 +9,10 @@ const raidSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    questline: {
+        type: String,
+        required: true
+    },
     shortName: {
         type: String,
         required: false
