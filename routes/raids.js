@@ -12,10 +12,23 @@ router.get('/', async (req, res) => {
     }
 });
 
-//Get one by id
+//Get raid by id
+// localhost:3000/raids/id/<id>
 
-router.get('/:id', (req, res) => {
-    res.send(req.params.id);
+router.get('/id/:id', async function (req, res){
+    //res.send(req.params.id);
+    let raids = await Raid.findById(req.params.id);
+
+    res.json(raids);
+});
+
+// Get raid by shortName
+// localhost:3000/raids/<shortName>
+
+router.get('/:shortName', async function (req, res){
+    let raidsByName = await Raid.find({ shortName: req.params.shortName }).exec();
+
+    res.json(raidsByName);
 });
 
 //Create
@@ -43,5 +56,6 @@ router.post('/', async (req, res) => {
 //Update
 
 //Delete
+
 
 module.exports = router
