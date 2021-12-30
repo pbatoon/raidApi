@@ -23,4 +23,10 @@ Raids are commonly referred to in raider vernacular by a short name consisting o
  
 To retrieve a raid by its short name, run a GET request to `http://localhost:3000/raids/<shortName`. This will pull up the data for the raid matching that short name
 
+## Update Raid by ID
+To update raid data by ID, run a PUT request to `http://localhost:3000/raids/id/<_id>` with the updated data in JSON format.
+
+## Delete Raid by ID
+To delete raid data by ID, run a DELETE request to `http://localhost:3000/raids/id/<_id>`.
+
 [^1]: Except for the Coils of Bahamut questline, which uses the letter 'T'
