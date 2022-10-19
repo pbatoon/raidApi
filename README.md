@@ -1,32 +1,84 @@
 # FFXIV Raid API
+A simple REST API that manages data on FFXIV raids.
 
 ## Data Structure
+Element | Description | Type | Notes
+------------|-------------|---------|-------------------
+name | The name of the raid | string | 
+raidTier | The tier of the requested raid | string | To differentiate sets within the same raid series, such as Asphodelos and Abyssos in the Pandaemonium questline.
+questline | The raid questline | string | The questline that unlocks the raids, such as Pandaemonium.
+shortName | The abbreviation  for the specific raid | string | Explained in further detail below. |
+minCharLvl | The minimum character level to unlock the raid | integer | |
+minILvl | The minimum iLvl needed to enter the raid | integer | |
+numTanks | The number of tanks required for a standard queue for the raid | integer |  | 
+numHealers | The number of healers required for a standard queue for the raid | integer |  |
+numDPS | The number of DPS required for a standard queue of the raid | integer | 
+
+### Short Name
+Raids are commonly referred by a short name consisting of the first letter of the raid questline name, such as Eden, Omega, etc., and the raid number within the questline[^1]. Raids with a Savage difficulty are followed by an S. For example, the 9th raid of the Eden questline on Savage difficulty is referred to as **E9S**.
+
+[^1]: Exception for the Coils of Bahamut questline, which uses "T" for "Turn." For example, the 5th raid of the Bahamut questline is **T5**.
+
+## Retrieve Raid by ID
+```
+GET http://localhost:3000/raids/id/{_id}
+
+where {_id} is the target ID of the raid.
+```
+**NOTE** This URL is also used to update and delete raid data.
+
+### Sample Request
+```
+GET http://localhost:3000/raids/id/0104
+```
+
+### Sample Response
 ```
 {
-    "name": "raid name",
-    "raidTier": "raid tier (such as Asphodelos)",
-    "questline": "raid questline (such as Pandaemonium)",
-    "shortName": "short name (detailed below)",
-    "minCharLvl": min character level (number),
-    "minILvl": min ilvl (number),
-    "numTanks": number of tanks (number),
-    "numHealers": number of healers (number),
-    "numDps": number of DPS (number)
+    "name": "The Seventh Circle (Savage)",
+    "raidTier": "Abyssos",
+    "questline": "Pandaemonium Savage",
+    "shortName": "P7S",
+    "minCharLvl": 90,
+    "minILvl": 610,
+    "numTanks": 2,
+    "numHealers": 2,
+    "numDps": 4
 }
 ```
 
-## Retrieve Raid by ID
-To retrieve raid data by ID, run a GET request using `http://localhost:3000/raids/id/<_id>`. We will also use this URL to update and delete data.
-
 ## Retrieve Raid by Short Name
-Raids are commonly referred to in raider vernacular by a short name consisting of the first letter of the raid questline name [^1] (eg. Eden, Deltascape, etc), the raid number within the questline, and if Savage difficulty, an 'S' denoting such. For example, the 9th raid of the Eden questline on Savage difficulty would be referred to as **E9S.** 
- 
-To retrieve a raid by its short name, run a GET request to `http://localhost:3000/raids/<shortName`. This will pull up the data for the raid matching that short name
+Displays raid information by using the its short name.
+```
+GET http://localhost:3000/raids/{shortName}
+```
+
+### Sample Request
+```
+GET http://localhost:3000/raids/O4S
+```
 
 ## Update Raid by ID
-To update raid data by ID, run a PUT request to `http://localhost:3000/raids/id/<_id>` with the updated data in JSON format.
+Updates the raid data by ID.
+```
+PUT http://localhost:3000/raids/id/{_id}
+```
 
 ## Delete Raid by ID
-To delete raid data by ID, run a DELETE request to `http://localhost:3000/raids/id/<_id>`.
+Deletes raid dada by ID.
+```
+DELETE http://localhost3000:raids/id/{_id}
+```
+### Sample Request
+```
+DELETE http://localhost:3000/raids/id/0023
+```
 
-[^1]: Except for the Coils of Bahamut questline, which uses the letter 'T'
+## Status Codes and Errors
+The following table lists the returned HTTP status codes.
+
+Code | Description | Notes 
+---|---|---
+**200** | OK | Request succeeded
+**404** | Not Found | Raid not found
+**500** | Internal Server Error |
